@@ -30,7 +30,7 @@ def _tint(v, palette):
 
 def ascii_image_svg(src, out, cols=104, palette=None, bg="#0d1117",
                     reveal=2.6, gamma=1.0, invert=False, cursor=True,
-                    equalize=False, autocontrast=None):
+                    equalize=False, autocontrast=None, display_width=None):
     palette = palette or ["#0b2545", "#12386b", "#1d5a9e", "#2f81f7",
                           "#58a6ff", "#9ecbff", "#d6e9ff"]
 
@@ -84,7 +84,13 @@ def ascii_image_svg(src, out, cols=104, palette=None, bg="#0d1117",
         cur = (f'<rect class="cur" x="0" y="{round(rows * CH_H - 6, 2)}" '
                f'width="{round(CH_W, 2)}" height="9" fill="#58a6ff"/>')
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {round(width,2)} {round(height,2)}" width="{round(width,2)}" height="{round(height,2)}" role="img" aria-label="ASCII art">
+    # Bake the display size into the element so the README can use plain
+    # markdown image syntax (no <img width=...>, no HTML for the editor to
+    # auto-close). viewBox keeps it crisp at any size.
+    dw = display_width or width
+    dh = height * (dw / width)
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {round(width,2)} {round(height,2)}" width="{round(dw,2)}" height="{round(dh,2)}" role="img" aria-label="ASCII art">
 <style>
 text{{font-family:{FONT};font-size:{FONT_PX}px;white-space:pre;dominant-baseline:auto}}
 .r{{opacity:0;animation:in .28s steps(1,end) forwards}}
@@ -116,7 +122,7 @@ GLYPHS = {
 
 
 def wordmark_svg(text, out, face="#58a6ff", depth="#1f4f87", bg="#0d1117",
-                 scale=2, dur=1.5):
+                 scale=2, dur=1.5, display_width=None):
     text = text.upper()
     rows = 7
     grid = ["" for _ in range(rows)]
@@ -148,7 +154,10 @@ def wordmark_svg(text, out, face="#58a6ff", depth="#1f4f87", bg="#0d1117",
     shadow = layer(cw * 0.45, chh * 0.30, depth, "l")
     front = layer(0, 0, face, "l")
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {round(width,2)} {round(height,2)}" width="{round(width,2)}" height="{round(height,2)}" role="img" aria-label="{html.escape(text)}">
+    dw = display_width or width
+    dh = height * (dw / width)
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {round(width,2)} {round(height,2)}" width="{round(dw,2)}" height="{round(dh,2)}" role="img" aria-label="{html.escape(text)}">
 <style>
 text{{font-family:{FONT};font-size:{round(FONT_PX*scale,2)}px;white-space:pre}}
 #wipe rect{{transform-origin:0 0;transform:scaleX(0);animation:wipe {dur}s cubic-bezier(.22,1,.36,1) forwards}}
@@ -170,11 +179,15 @@ text{{font-family:{FONT};font-size:{round(FONT_PX*scale,2)}px;white-space:pre}}
 
 
 if __name__ == "__main__":
+    # Widths chosen so hero + wordmark sit side by side inside GitHub's
+    # ~890px README column when written as two markdown images on one line.
     print(ascii_image_svg("banner.jpeg", "hero.svg", cols=104,
-                          equalize=True, gamma=1.25, reveal=2.4))
-    print(wordmark_svg("ALI SIRBALI", "wordmark.svg", scale=2))
+                          equalize=True, gamma=1.25, reveal=2.4,
+                          display_width=380))
+    print(wordmark_svg("ALI SIRBALI", "wordmark.svg", scale=2,
+                       display_width=420))
     print(ascii_image_svg(
         "footer.jpeg", "dino.svg", cols=150, autocontrast=1, gamma=1.1,
-        reveal=1.8, cursor=False,
+        reveal=1.8, cursor=False, display_width=820,
         palette=["#0d1117", "#1c2530", "#2d3743", "#556170",
                  "#8b98a6", "#c9d1d9", "#ffffff"]))
