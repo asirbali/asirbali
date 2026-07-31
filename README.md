@@ -10,6 +10,6 @@ I'm putting recent work up here now. Until then, email is the fastest way to rea
 
 [![Email](https://img.shields.io/badge/Email-asirbali%40gmail.com-24292f?style=flat-square&logo=gmail&logoColor=white)](mailto:asirbali@gmail.com)
 
-### `ali@github ~ $ ./footer.sh`
+### `ali@github ~ $ ./runner.sh`
 
-![ASCII horizon](./dino.svg)
+![ASCII dino runner](./runner.svg)
