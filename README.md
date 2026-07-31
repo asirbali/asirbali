@@ -1,6 +1,6 @@
-<img src="https://raw.githubusercontent.com/asirbali/asirbali/main/banner.jpeg" width="100%" alt="" />
+### `ali@github ~ $ whoami`
 
-# Ali Sirbali
+![ASCII workstation](./hero.svg) ![ALI SIRBALI](./wordmark.svg)
 
 **I build end-to-end systems that make companies run.** AI pipelines, internal automation, and production SaaS platforms.
 
@@ -10,4 +10,6 @@ I'm putting recent work up here now. Until then, email is the fastest way to rea
 
 [![Email](https://img.shields.io/badge/Email-asirbali%40gmail.com-24292f?style=flat-square&logo=gmail&logoColor=white)](mailto:asirbali@gmail.com)
 
-<img src="https://raw.githubusercontent.com/asirbali/asirbali/main/footer.jpeg" width="100%" alt="" />
+### `ali@github ~ $ ./footer.sh`
+
+![ASCII horizon](./dino.svg)
